@@ -56,3 +56,9 @@ It also includes an **Admin Panel** for managing products, orders, and users.
 ```bash
 git clone https://github.com/yourusername/ecommerce-project.git
 cd ecommerce-project
+
+cd backend
+npm start
+
+cd frontend
+npm run dev
