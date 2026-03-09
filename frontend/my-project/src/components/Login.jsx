@@ -58,6 +58,8 @@ function Login() {
   };
 
   return (
+    
+    
     <div className="bg-gradient-to-r from-black to-blue-950 min-h-screen flex items-center justify-center text-white">
       <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-[500px]">
 

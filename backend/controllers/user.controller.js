@@ -6,8 +6,6 @@ import config from '../config.js';
 import jwt from 'jsonwebtoken';
 import { z }  from "zod";
 
-
-
 // SignUp
 
 export const signup = async (req, res) => {

@@ -42,7 +42,8 @@ const DB_URI = process.env.MONGO_URI
 
 try {
   await mongoose.connect(DB_URI)
-   console.log('Connect to MongoDB')
+   console.log("Connect to MongoDB")
+
 } catch(error) {
     console.log(error)
 }
@@ -63,7 +64,7 @@ app.use("/api/v1/order" , orderRoute)
 });
 
 
-app.get('/' , (req,res) => {
+app.get('/' , (req ,res) => {
     res.send('hello ')
 })
 
