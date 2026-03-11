@@ -24,22 +24,25 @@ const Home = () => {
       }
     },[])
       // logout 
-      const handleLogout = async() =>{
+      const handleLogout = async () =>{
         try {
           const response = await axios.get(
             "http://localhost:4001/api/v1/user/logout",
             { withCredentials: true }
           );
       
-          alert(response.data.message);  // success alert
+          localStorage.removeItem("user"); // ⭐ important fix
+      
           setIsLoggedIn(false);
+      
+          alert(response.data.message);
       
         } catch (error) {
           console.log("error in logging out", error);
       
           alert(
             error.response?.data?.errors || "Error in logging out"
-          );  // error alert
+          );
         }
       };
       // fetch course

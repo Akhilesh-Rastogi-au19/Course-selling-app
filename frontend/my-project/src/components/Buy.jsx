@@ -5,6 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 
+
+
 const BACKEND_URL = "http://localhost:4001/api/v1";
 
 function Buy() {
