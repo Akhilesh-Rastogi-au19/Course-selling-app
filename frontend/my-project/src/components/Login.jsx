@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../../public/logo.webp";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { BACKEND_URL } from "../utils/utils.js";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -29,7 +29,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4001/api/v1/user/login",
+        `${BACKEND_URL}/user/login`,
         formData,
         { withCredentials: true }
       );

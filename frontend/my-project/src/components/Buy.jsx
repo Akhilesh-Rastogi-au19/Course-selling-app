@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { BACKEND_URL } from "../utils/utils.js";
 
 
 
-
-const BACKEND_URL = "http://localhost:4001/api/v1";
+// const BACKEND_URL = "http://localhost:4001/api/v1";
 
 function Buy() {
   const { courseId } = useParams();

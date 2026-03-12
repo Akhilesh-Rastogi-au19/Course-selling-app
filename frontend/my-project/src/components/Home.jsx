@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios" ;
 import Slider from "react-slick";
+import { BACKEND_URL } from "../utils/utils.js";
 
 
 
@@ -23,34 +24,13 @@ const Home = () => {
         setIsLoggedIn(false)
       }
     },[])
-      // logout 
-      const handleLogout = async () =>{
-        try {
-          const response = await axios.get(
-            "http://localhost:4001/api/v1/user/logout",
-            { withCredentials: true }
-          );
-      
-          localStorage.removeItem("user"); // ⭐ important fix
-      
-          setIsLoggedIn(false);
-      
-          alert(response.data.message);
-      
-        } catch (error) {
-          console.log("error in logging out", error);
-      
-          alert(
-            error.response?.data?.errors || "Error in logging out"
-          );
-        }
-      };
+     
       // fetch course
 
     useEffect(() => {
         const fetchCourses = async ()=>{
             try{
-            const response = await axios.get("http://localhost:4001/api/v1/course/courses" , 
+            const response = await axios.get(`${BACKEND_URL}/course/courses` , 
             {
                 withCredentials: true
             }
@@ -65,6 +45,29 @@ const Home = () => {
         };
         fetchCourses();
     }, [])
+
+     // logout 
+     const handleLogout = async () =>{
+      try {
+        const response = await axios.get(
+          `${BACKEND_URL}/user/logout`,
+          { withCredentials: true }
+        );
+    
+        localStorage.removeItem("user"); // ⭐ important fix
+    
+        setIsLoggedIn(false);
+    
+        alert(response.data.message);
+    
+      } catch (error) {
+        console.log("error in logging out", error);
+    
+        alert(
+          error.response?.data?.errors || "Error in logging out"
+        );
+      }
+    };
     
     var settings = {
         dots: true,

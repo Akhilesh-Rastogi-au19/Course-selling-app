@@ -7,6 +7,7 @@ import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { RiHome2Fill } from "react-icons/ri";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { BACKEND_URL } from "../utils/utils.js";
 
 const Purchases = () => {
 
@@ -43,7 +44,7 @@ const Purchases = () => {
       try {
 
         const response = await axios.get(
-          "http://localhost:4001/api/v1/user/purchases",
+          `${BACKEND_URL}/user/purchases`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -67,7 +68,7 @@ const Purchases = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:4001/api/v1/user/logout", {
+      await axios.get(`${BACKEND_URL}/user/logout`, {
         withCredentials: true,
       });
 
