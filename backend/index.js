@@ -22,9 +22,21 @@ app.use(express.json());
 app.use(cookieParser());
 
 
+// app.use(
+//     cors({
+//       origin: process.env.FRONTEND_URL,
+//       credentials: true,
+//       methods: ["GET", "POST", "PUT", "DELETE"],
+//       allowedHeaders: ["Content-Type", "Authorization"],
+//     })
+//   );
+
 app.use(
     cors({
-      origin: process.env.FRONTEND_URL,
+      origin: [
+        "http://localhost:5173",
+        "https://courseaop.vercel.app"
+      ],
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
