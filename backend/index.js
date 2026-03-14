@@ -65,7 +65,7 @@ app.use("/api/v1/order" , orderRoute)
 
 
 app.get('/' , (req ,res) => {
-    res.send('hello ')
+    res.send("Hi im bakcend ")
 })
 
 app.listen(port, () =>{
