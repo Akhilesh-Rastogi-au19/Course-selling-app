@@ -23,10 +23,7 @@ app.use(cookieParser());
 
 
 app.use(cors({
-    origin: ["http://localhost:5173",
-    "https://course-selling-app-2-ewqe.onrender.com",
-    "https://course-selling-app-kohl-theta.vercel.app"
-],
+    origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
