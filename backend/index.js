@@ -11,24 +11,23 @@ import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from 'cloudinary'
 import cookieParser from 'cookie-parser';
 
-
-
-
 const app = express();
+
+app.use(cors({
+  origin: ["http://localhost:5173",
+  "https://course-selling-app-kohl-theta.vercel.app"
+],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 
 //middleware json ko parser karne k liye
 // app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-
-app.use(cors({
-    origin: "https://course-selling-app-kohl-theta.vercel.app",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  }));
-  
 
 app.use(fileUpload({
     useTempFiles : true,
