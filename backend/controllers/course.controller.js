@@ -130,8 +130,11 @@ export const getCourses = async (req, res) => {
           const courses = await Course.find({})
           res.status(200).json({ courses })
     } catch(error) {
-        res.status(500).json({errors: 'error in getting courses'})
-         console.log('error to get course', error)
+      console.log("GET COURSES ERROR:", error);
+      res.status(500).json({
+        message: "error in getting courses",
+        error: error.message
+      });
     }
 };
 
