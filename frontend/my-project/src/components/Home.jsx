@@ -1,266 +1,193 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../public/logo.webp";
 import { Link } from "react-router-dom";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import axios from "axios" ;
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import axios from "axios";
 import Slider from "react-slick";
+import toast from "react-hot-toast";
 import { BACKEND_URL } from "../utils/utils.js";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
+function Home() {
+  const [courses, setCourses] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const Home = () => {
-    const [courses, setCourses] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-    useEffect(( ) =>{
-      const token = localStorage.getItem('user')
-      if(token){
-        setIsLoggedIn(true)
-      } else {
-        setIsLoggedIn(false)
-      }
-    },[])
-     
-      // fetch course
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
+  }, []);
 
-    useEffect(() => {
-        const fetchCourses = async ()=>{
-            try{
-            const response = await axios.get(`${BACKEND_URL}/course/courses` , 
-            {
-                withCredentials: true
-            }
-            );
-            console.log(response.data.courses)
-          
-            setCourses(response.data.courses)
-            
-            } catch(error){
-              console.log("error in fetchCourse" , error)
-            }
-        };
-        fetchCourses();
-    }, [])
-
-     // logout 
-     const handleLogout = async () =>{
+  useEffect(() => {
+    const fetchCourses = async () => {
       try {
-        const response = await axios.get(
-          `${BACKEND_URL}/user/logout`,
-          { withCredentials: true }
-        );
-    
-        localStorage.removeItem("user"); // ⭐ important fix
-    
-        setIsLoggedIn(false);
-    
-        alert(response.data.message);
-    
-      } catch (error) {
-        console.log("error in logging out", error);
-    
-        alert(
-          error.response?.data?.errors || "Error in logging out"
-        );
+        const res = await axios.get(`${BACKEND_URL}/course/courses`, {
+          withCredentials: true,
+        });
+        setCourses(res.data.courses);
+      } catch (err) {
+        console.log(err);
       }
     };
-    
-    var settings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        autoplay: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-              infinite: true,
-              dots: true
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2,
-              initialSlide: 2
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-        ]
-      };
+    fetchCourses();
+  }, []);
 
-      return (
-        <div className="bg-gradient-to-r from-black to-blue-950 ">
-          <div className="h-[1250px] md:h-[1050px] text-white container mx-auto">
-            {/* Header */}
-            <header className="flex items-center justify-between p-6 ">
-              <div className="flex items-center space-x-2">
-                <img
-                  src={logo}
-                  alt=""
-                  className="w-7 h-7 md:w-10 md:h-10 rounded-full"
-                />
-                <h1 className="md:text-2xl text-orange-500 font-bold">
-                  CourseHaven
-                </h1>
-              </div>
-              <div className="space-x-4">
-                {isLoggedIn ? (
-                  <button
-                    onClick={handleLogout}
-                    className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
-                  >
-                    Logout
-                  </button>
-                ) : (
-                  <>
-                    <Link
-                      to={"/login"}
-                      className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to={"/signup"}
-                      className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
-                    >
-                      Signup
-                    </Link>
-                  </>
-                )}
-              </div>
-            </header>
-    
-            {/* Main section */}
-            <section className="text-center py-20">
-              <h1 className="text-4xl font-semibold text-orange-500">
-                CourseHaven
-              </h1>
-    
-              <br />
-              <p className="text-gray-500">
-                Sharpen your skills with courses crafted by experts.
-              </p>
-              <div className="space-x-4 mt-8">
-                <Link
-                  to={"/courses"}
-                  className="bg-green-500 text-white p-2 md:py-3 md:px-6 rounded font-semibold hover:bg-white duration-300 hover:text-black"
-                >
-                  Explore courses
-                </Link>
-                <Link
-                  to={"https://www.youtube.com/@ScrollwithAkhil7"}
-                  className="bg-white text-black  p-2 md:py-3 md:px-6 rounded font-semibold hover:bg-green-500 duration-300 hover:text-white"
-                >
-                  Courses videos
-                </Link>
-              </div>
-            </section>
-            <section className="p-10">
-              <Slider className="" {...settings}>
-                {courses.map((course) => (
-                  <div key={course._id} className="p-4">
-                    <div className="relative flex-shrink-0 w-50 transition-transform duration-300 transform hover:scale-105">
-                      <div className="bg-gray-900 rounded-lg overflow-hidden">
-                        <img
-                          className="h-30 w-full object-contain"
-                          src={course.image.url}
-                          alt=""
-                        />
-                        <div className="p-6 text-center">
-                          <h2 className="text-xl font-bold text-white">
-                            {course.title}
-                          </h2>
-                      
-                          <Link to={`/buy/${course._id}`} className="mt-8 bg-orange-500 text-white py-1 px-3 rounded-full hover:bg-blue-500 duration-300">
-                            Enroll Now
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </Slider>
-            </section>
-    
-            <hr />
-            {/* Footer */}
-            <footer className="my-12">
-              <div className="grid grid-cols-1 md:grid-cols-3">
-                <div className="flex flex-col items-center md:items-start">
-                  {/* <div className="flex items-center space-x-2">
-                    <img src={logo} alt="" className="w-10 h-10 rounded-full" />
-                    <h1 className="text-2xl text-orange-500 font-bold">
-                      CourseHaven
-                    </h1>
-                  </div> */}
-                  <div className="mt-3 ml-2 md:ml-8">
-                    <p className="mb-2">Follow us</p>
-                    <div className="flex space-x-4">
-                      <a href="">
-                        <FaFacebook className="text-2xl hover:text-blue-400 duration-300" />
-                      </a>
-                      <a href="">
-                        <FaInstagram className="text-2xl hover:text-pink-600 duration-300" />
-                      </a>
-                      <a href="">
-                        <FaTwitter className="text-2xl hover:text-blue-600 duration-300" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-    
-                <div className="items-center mt-6 md:mt-0 flex flex-col">
-                  <h3 className="text-lg font-semibold md:mb-4">connects</h3>
-                  <ul className=" space-y-2 text-gray-400">
-                    <li className="hover:text-white cursor-pointer duration-300">
-                      youtube- learn coding
-                    </li>
-                    <li className="hover:text-white cursor-pointer duration-300">
-                      telegram- learn coding
-                    </li>
-                    <li className="hover:text-white cursor-pointer duration-300">
-                      Github- learn coding
-                    </li>
-                  </ul>
-                </div>
-                <div className="items-center mt-6 md:mt-0 flex flex-col">
-                  <h3 className="text-lg font-semibold mb-4">
-                    copyrights &#169; 2024
-                  </h3>
-                  <ul className=" space-y-2 text-center text-gray-400">
-                    <li className="hover:text-white cursor-pointer duration-300">
-                      Terms & Conditions
-                    </li>
-                    <li className="hover:text-white cursor-pointer duration-300">
-                      Privacy Policy
-                    </li>
-                    <li className="hover:text-white cursor-pointer duration-300">
-                      Refund & Cancellation
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </footer>
-          </div>
-        </div>
-      );
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/user/logout`, {
+        withCredentials: true,
+      });
+      toast.success(res.data.message);
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
+    } catch {
+      toast.error("Logout failed");
     }
-    
-    export default Home;
+  };
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 400,
+    autoplay: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1 } },
+    ],
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-r from-black to-blue-950 text-white">
+      <div className="max-w-6xl mx-auto px-3">
+
+        {/* HEADER */}
+        <header className="flex justify-between items-center py-4">
+          <div className="flex items-center gap-2">
+            <img src={logo} className="w-7 h-7 rounded-full" />
+            <h1 className="text-lg font-semibold text-orange-500">
+              CourseHaven
+            </h1>
+          </div>
+
+          <div className="flex gap-2">
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="text-sm border px-3 py-1 rounded hover:bg-white hover:text-black"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-sm border px-3 py-1 rounded hover:bg-white hover:text-black"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="text-sm border px-3 py-1 rounded hover:bg-white hover:text-black"
+                >
+                  Signup
+                </Link>
+              </>
+            )}
+          </div>
+        </header>
+
+        {/* HERO */}
+        <section className="text-center py-10">
+          <h1 className="text-2xl md:text-3xl font-bold text-orange-500">
+            CourseHaven
+          </h1>
+
+          <p className="text-gray-400 mt-2 text-sm">
+            Sharpen your skills with expert courses.
+          </p>
+
+          <div className="flex justify-center gap-3 mt-5 flex-wrap">
+            <Link
+              to="/courses"
+              className="bg-green-500 px-4 py-2 text-sm rounded hover:bg-white hover:text-black"
+            >
+              Explore
+            </Link>
+
+            <Link
+              to="https://www.youtube.com/learncodingofficial"
+              className="bg-white text-black px-4 py-2 text-sm rounded hover:bg-green-500 hover:text-white"
+            >
+              Videos
+            </Link>
+          </div>
+        </section>
+
+        {/* COURSES */}
+        <section className="py-6">
+          <Slider {...settings}>
+            {courses.map((course) => (
+              <div key={course._id} className="px-2">
+                <div className="bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition">
+
+                  <img
+                    className="h-28 w-full object-cover"
+                    src={course.image?.url || "https://via.placeholder.com/200"}
+                  />
+
+                  <div className="p-3 text-center">
+                    <h2 className="text-sm font-medium">
+                      {course.title}
+                    </h2>
+
+                    <Link
+                      to={`/buy/${course._id}`}
+                      className="inline-block mt-2 text-xs bg-orange-500 px-3 py-1 rounded hover:bg-blue-500"
+                    >
+                      Enroll
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="py-6 border-t border-gray-700 mt-6 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-center md:text-left">
+
+            <div>
+              <h1 className="text-orange-500 font-semibold">CourseHaven</h1>
+              <div className="flex justify-center md:justify-start gap-3 mt-2">
+                <FaFacebook />
+                <FaInstagram />
+                <FaTwitter />
+              </div>
+            </div>
+
+            <div>
+              <p className="text-gray-400">YouTube</p>
+              <p className="text-gray-400">Telegram</p>
+              <p className="text-gray-400">GitHub</p>
+            </div>
+
+            <div>
+              <p className="text-gray-400">Terms</p>
+              <p className="text-gray-400">Privacy</p>
+            </div>
+
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  );
+}
+
+export default Home;
+

@@ -6,40 +6,40 @@ import toast from "react-hot-toast";
 import { BACKEND_URL } from "../utils/utils.js";
 
 function AdminLogin() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-  
-    const [errorMessage, setErrorMessage] = useState("");
-  
-    const navigate = useNavigate();
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      console.log({ password });
-      try {
-        const response = await axios.post(
-          `${BACKEND_URL}/user/login`,
-          {
-            email,
-            password,
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log({ password });
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/admin/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
           },
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log("AdminLogin successful: ", response.data);
-        toast.success(response.data.message);
-        navigate("/admin/dashboard");
-        localStorage.setItem("admin", JSON.stringify(response.data));
-      } catch (error) {
-        if (error.response) {
-          setErrorMessage(error.response.data.errors || "AdminLogin failed!!!");
         }
+      );
+      console.log("AdminLogin successful: ", response.data);
+      toast.success(response.data.message);
+      navigate("/admin/dashboard");
+      localStorage.setItem("admin", JSON.stringify(response.data));
+    } catch (error) {
+      if (error.response) {
+        setErrorMessage(error.response.data.errors || "AdminLogin failed!!!");
       }
-    };
+    }
+  };
 
   return (
     <div className="bg-gradient-to-r from-black to-blue-950 ">

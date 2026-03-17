@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
-import cousreRoute from './routes/course.route.js'
+import courseRoute from './routes/course.route.js'
 import userRoute from './routes/user.route.js'
 import adminRoute from "./routes/admin.route.js";
 import orderRoute from "./routes/order.route.js"
@@ -11,12 +11,13 @@ import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from 'cloudinary'
 import cookieParser from 'cookie-parser';
 
+
+
+
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:5173",
-  "https://course-selling-app-kohl-theta.vercel.app"
-],
+  origin:  "http://localhost:5173",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -27,6 +28,8 @@ app.use(cors({
 // app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+
 
 
 app.use(fileUpload({
@@ -49,7 +52,7 @@ try {
 
 // definig routes
 
-app.use('/api/v1/course', cousreRoute)
+app.use('/api/v1/course', courseRoute)
 app.use('/api/v1/user', userRoute)
 app.use("/api/v1/admin" , adminRoute)
 app.use("/api/v1/order" , orderRoute)
@@ -64,7 +67,7 @@ app.use("/api/v1/order" , orderRoute)
 
 
 app.get('/' , (req ,res) => {
-    res.send("Hi im bakcend ")
+    res.send('hi baekend ')
 })
 
 app.listen(port, () =>{

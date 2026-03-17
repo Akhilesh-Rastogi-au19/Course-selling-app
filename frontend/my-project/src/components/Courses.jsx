@@ -14,7 +14,6 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../utils/utils.js";
 
-
 function Courses() {
   const [courses, setCourses] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -167,7 +166,7 @@ function Courses() {
                   className="border border-gray-200 rounded-lg p-4 shadow-sm"
                 >
                   <img
-                    src={course.image?.url}
+                    src={course.image.url}
                     alt={course.title}
                     className="rounded mb-4"
                   />
