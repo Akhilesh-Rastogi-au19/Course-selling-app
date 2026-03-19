@@ -17,15 +17,15 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 app.use(cors({
-  origin:  "http://localhost:5173",
+  origin:  "https://course-selling-app-x3kg-hig7i1pbf-akhileshs-projects-0cad3b8e.vercel.app",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-
+app.use(cors());
 //middleware json ko parser karne k liye
-// app.use(cors());
+
 app.use(express.json());
 app.use(cookieParser());
 
