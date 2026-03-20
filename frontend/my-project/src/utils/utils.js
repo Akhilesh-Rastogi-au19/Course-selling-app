@@ -1,1 +1,1 @@
-export const BACKEND_URL = "http://localhost:4001/api/v1";
+export const BACKEND_URL = "https://flourishing-gnome-180fc5.netlify.app";
