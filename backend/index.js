@@ -16,10 +16,22 @@ import orderRoute from "./routes/order.route.js";
 const app = express();
 
 // ✅ CORS fix
+
+const allowedOrigins = [
+  "http://localhost:5173", // local
+  process.env.FRONTEND_URL // deployed
+];
+
 app.use(cors({
-  origin: "https://course-selling-app-x3kg-hig7i1pbf-akhileshs-projects-0cad3b8e.vercel.app",
-  credentials: true,
+  origin: allowedOrigins,
+  credentials: true
 }));
+
+// app.use(cors({
+    
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true,
+//   }));
 
 app.use(express.json());
 app.use(cookieParser());
