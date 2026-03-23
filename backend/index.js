@@ -16,22 +16,14 @@ import orderRoute from "./routes/order.route.js";
 const app = express();
 
 // ✅ CORS fix
-
-const allowedOrigins = [
-  "http://localhost:5173", // local
-  process.env.FRONTEND_URL // deployed
-];
-
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
-
-// app.use(cors({
-    
-//     origin: process.env.FRONTEND_URL,
-//     credentials: true,
-//   }));
+    origin: [
+      "https://flourishing-gnome-180fc5.netlify.app/", 
+      "http://localhost:5173"            // ✅ ADD THIS
+    ],
+ 
+    credentials: true,
+  }));
 
 app.use(express.json());
 app.use(cookieParser());
