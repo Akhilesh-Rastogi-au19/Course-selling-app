@@ -118,7 +118,7 @@ function Home() {
             </Link>
 
             <Link
-              to="https://www.youtube.com/learncodingofficial"
+              to="https://www.youtube.com/@ScrollwithAkhil7"
               className="bg-white text-black px-4 py-2 text-sm rounded hover:bg-green-500 hover:text-white"
             >
               Videos
